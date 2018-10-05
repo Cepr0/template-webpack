@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const sass = require('node-sass');
 
 const mode = process.env.NODE_ENV || 'development';
 const prod = mode === 'production';
@@ -27,7 +28,26 @@ module.exports = {
 						skipIntroByDefault: true,
 						nestedTransitions: true,
 						emitCss: true,
-						hotReload: true
+						hotReload: true,
+            style: ({content, attributes}) => {
+              if (attributes.type !== 'text/scss') return;
+
+              return new Promise((fulfil, reject) => {
+                sass.render({
+                  data: content,
+                  includePaths: ['src'],
+                  sourceMap: true,
+                  outFile: 'x' // this is necessary, but is ignored
+                }, (err, result) => {
+                  if (err) return reject(err);
+
+                  fulfil({
+                    code: result.css.toString(),
+                    map: result.map.toString()
+                  });
+                });
+              });
+            }
 					}
 				}
 			},

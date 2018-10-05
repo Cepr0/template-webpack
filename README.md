@@ -1,3 +1,9 @@
+# Updates of this fork
+
+1. Updated svelte-loader to 2.11.0 since 2.9.0 version was causing a crush on startup on Windows
+2. Added node-sass dependency
+3. Updated webpack.config.js to add scss support
+
 # svelte app
 
 This is a project template for [Svelte](https://svelte.technology) apps. It lives at https://github.com/sveltejs/template-webpack.
